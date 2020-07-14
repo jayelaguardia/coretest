@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using coretest.Domain.Models;
 using coretest.Domain.Repositories;
@@ -13,11 +12,6 @@ namespace coretest.Persistence.Repositories
         {
         }
 
-        public async Task<IEnumerable<User>> ListAsync()
-        {
-            return await _context.User.ToListAsync();
-        }
-
         public async Task AddAsync(User user)
         {
             await _context.User.AddAsync(user);
@@ -26,6 +20,11 @@ namespace coretest.Persistence.Repositories
         public async Task<User> FindByNameAsync(string name)
         {
             return await _context.User.FirstOrDefaultAsync(s => s.username == name);     
+        }
+
+        public async Task<User> FindByEmailAsync(string name)
+        {
+            return await _context.User.FirstOrDefaultAsync(s => s.email == name);
         }
     }
 }

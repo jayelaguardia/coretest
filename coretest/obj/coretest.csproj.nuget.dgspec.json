@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Rudy\\source\\repos\\coretest\\coretest\\coretest.csproj": {}
+    "C:\\Users\\rezak\\source\\repos\\coretest\\coretest\\coretest.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Rudy\\source\\repos\\coretest\\coretest\\coretest.csproj": {
+    "C:\\Users\\rezak\\source\\repos\\coretest\\coretest\\coretest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Rudy\\source\\repos\\coretest\\coretest\\coretest.csproj",
+        "projectUniqueName": "C:\\Users\\rezak\\source\\repos\\coretest\\coretest\\coretest.csproj",
         "projectName": "coretest",
-        "projectPath": "C:\\Users\\Rudy\\source\\repos\\coretest\\coretest\\coretest.csproj",
-        "packagesPath": "C:\\Users\\Rudy\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Rudy\\source\\repos\\coretest\\coretest\\obj\\",
+        "projectPath": "C:\\Users\\rezak\\source\\repos\\coretest\\coretest\\coretest.csproj",
+        "packagesPath": "C:\\Users\\rezak\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rezak\\source\\repos\\coretest\\coretest\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Rudy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rezak\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -44,7 +44,19 @@
             },
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.AspNetCore.AzureKeyVault.HostingStartup": {
+              "target": "Package",
+              "version": "[2.0.4, )"
+            },
+            "Microsoft.Azure.KeyVault": {
+              "target": "Package",
+              "version": "[3.0.5, )"
+            },
+            "Microsoft.Azure.Services.AppAuthentication": {
+              "target": "Package",
+              "version": "[1.5.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -61,6 +73,10 @@
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
+            "Microsoft.Extensions.Configuration.AzureKeyVault": {
               "target": "Package",
               "version": "[3.1.5, )"
             },

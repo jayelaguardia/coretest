@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using coretest.Domain.Models;
 using coretest.Domain.Services;
 using coretest.Domain.Repositories;
@@ -19,14 +16,14 @@ namespace coretest.Services
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
         }
-        public async Task<(CreateUserResponse, Auth)> FindAsync(Auth auth)
+        public async Task<CreateUserResponse> FindAsync(Auth auth)
         {
             var existingUser = await _userRepository.FindByNameAsync(auth.username);
 
             if (existingUser == null)
-                return (new CreateUserResponse("Incorrect username or password."), auth);
+                return new CreateUserResponse("Incorrect username or password.");
 
-            return (new CreateUserResponse(auth), auth);
+            return new CreateUserResponse(existingUser);
         }
     }
 }

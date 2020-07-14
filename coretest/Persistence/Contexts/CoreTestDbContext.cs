@@ -16,12 +16,13 @@ namespace coretest.Persistence.Contexts
             builder.Entity<User>().ToTable("User");
             builder.Entity<User>().HasKey(p => p.id);
             builder.Entity<User>().Property(p => p.id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<User>().Property(p => p.email).IsRequired();
             builder.Entity<User>().Property(p => p.username).IsRequired().HasMaxLength(30);
             builder.Entity<User>().Property(p => p.password).IsRequired().HasMaxLength(72);
 
             builder.Entity<User>().HasData
             (
-                new User { id = 1, username = "dunder", password = "mifflin" }
+                new User { id = 1, email = "test@gmail.com", username = "dunder", password = "mifflin" }
             );
         }
     }

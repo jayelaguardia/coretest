@@ -1,16 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using coretest.Domain.Repositories;
 using coretest.Domain.Services;
 using coretest.Persistence.Contexts;
@@ -36,9 +30,9 @@ namespace coretest
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddDbContext<CoreTestDbContext>(options => {
-                options.UseInMemoryDatabase("coretest-api-in-memory");
-            });
+            // Add database services.
+            services.AddDbContext<CoreTestDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("Development")));
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();

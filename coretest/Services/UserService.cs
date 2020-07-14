@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using coretest.Domain.Models;
 using coretest.Domain.Repositories;
@@ -20,11 +18,6 @@ namespace coretest.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<User>> ListAsync()
-        {
-            return await _userRepository.ListAsync();
-        }
-
         public async Task<CreateUserResponse> CreateUserAsync(User user)
         {
             try
@@ -41,12 +34,22 @@ namespace coretest.Services
             }
         }
 
-        public async Task<CreateUserResponse> FindAsync(User user)
+        public async Task<CreateUserResponse> FindNameAsync(User user)
         {
             var existingUser = await _userRepository.FindByNameAsync(user.username);
 
             if (existingUser != null)
                 return new CreateUserResponse("This username already exists.");
+
+            return new CreateUserResponse(user);
+        }
+
+        public async Task<CreateUserResponse> FindEmailAsync(User user)
+        {
+            var existingUser = await _userRepository.FindByEmailAsync(user.email);
+
+            if (existingUser != null)
+                return new CreateUserResponse("This email already exists.");
 
             return new CreateUserResponse(user);
         }

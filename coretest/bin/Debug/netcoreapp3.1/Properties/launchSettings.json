@@ -14,6 +14,7 @@
       "launchBrowser": true,
       "launchUrl": "weatherforecast",
       "environmentVariables": {
+        "KEYVAULT_ENDPOINT": "https://coretestsecrets.vault.azure.net/",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
