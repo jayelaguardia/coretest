@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\rezak\\source\\repos\\coretest\\coretest\\coretest.csproj": {}
+    "C:\\Users\\rezak\\Source\\Repos\\coretest\\coretest\\coretest.csproj": {}
   },
   "projects": {
-    "C:\\Users\\rezak\\source\\repos\\coretest\\coretest\\coretest.csproj": {
+    "C:\\Users\\rezak\\Source\\Repos\\coretest\\coretest\\coretest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rezak\\source\\repos\\coretest\\coretest\\coretest.csproj",
+        "projectUniqueName": "C:\\Users\\rezak\\Source\\Repos\\coretest\\coretest\\coretest.csproj",
         "projectName": "coretest",
-        "projectPath": "C:\\Users\\rezak\\source\\repos\\coretest\\coretest\\coretest.csproj",
+        "projectPath": "C:\\Users\\rezak\\Source\\Repos\\coretest\\coretest\\coretest.csproj",
         "packagesPath": "C:\\Users\\rezak\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rezak\\source\\repos\\coretest\\coretest\\obj\\",
+        "outputPath": "C:\\Users\\rezak\\Source\\Repos\\coretest\\coretest\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\rezak\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -45,6 +45,18 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[8.0.0, )"
+            },
+            "Microsoft.AspNet.Mvc": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
+            "Microsoft.AspNet.WebApi.Core": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[3.1.5, )"
             },
             "Microsoft.AspNetCore.AzureKeyVault.HostingStartup": {
               "target": "Package",
@@ -103,7 +115,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -6,6 +6,8 @@ namespace coretest.Domain.Services
 {
     public interface IAuthService
     {
-        Task<CreateUserResponse> FindAsync(Auth auth);
+        Task<CreateUserResponse> FindAsync(string username);
+        CreateUserResponse CheckPass(Auth auth, User user);
+        string CreateToken(User user);
     }
 }

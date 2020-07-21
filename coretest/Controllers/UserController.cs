@@ -1,13 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using coretest.Domain.Models;
 using coretest.Domain.Services;
 using AutoMapper;
 using coretest.Resources;
 using coretest.Extensions;
-using System.Text.RegularExpressions;
-using System.Security.Cryptography;
 using coretest.Filters;
 
 namespace coretest.Controllers
@@ -34,45 +31,33 @@ namespace coretest.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
 
             var TestUser = _mapper.Map<CreateUserResource, User>(resource);
+
             //test if email is taken
             var result = await _userService.FindEmailAsync(TestUser);
             if (!result.Success)
             {
                 return BadRequest(result.Message);
             }
+
             //test if username is taken
             result = await _userService.FindNameAsync(TestUser);
             if (!result.Success)
             {
                 return BadRequest(result.Message);
             }
-            //test password validation
-            if (resource.password.StartsWith(" ") || resource.password.EndsWith(" "))
-            {
-                return BadRequest("Password must not start or end with empty spaces");
 
-            }
-            var rx = new Regex(@"(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+");
-            if (rx.IsMatch(resource.password) == false)
+            //test password validation
+            result = await _userService.PasswordValidation(TestUser);
+            if (!result.Success)
             {
-                return BadRequest("password must contain one upper case, lower case, number, and special character");
+                return BadRequest(result.Message);
             }
 
             //hash the password
-            byte[] salt;
-            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
-            var pbkdf2 = new Rfc2898DeriveBytes(resource.password, salt, 10000);
-            byte[] hash = pbkdf2.GetBytes(20);
-            byte[] hashBytes = new byte[36];
-            Array.Copy(salt, 0, hashBytes, 0, 16);
-            Array.Copy(hash, 0, hashBytes, 16, 20);
-            resource.password = Convert.ToBase64String(hashBytes);
-
-            var user = _mapper.Map<CreateUserResource, User>(resource);
+            var user = await _userService.HashPassword(TestUser);
 
             //save user to database
             var response = await _userService.CreateUserAsync(user);
-
             if (!response.Success)
             {
                 return BadRequest(response.Message);

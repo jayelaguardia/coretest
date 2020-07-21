@@ -11,6 +11,9 @@ using coretest.Persistence.Contexts;
 using coretest.Persistence.Repositories;
 using coretest.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System;
 
 namespace coretest
 {
@@ -39,6 +42,21 @@ namespace coretest
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(jwtBearerOptions =>
+            {
+                jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Issuer"],
+                    ValidAudience = Configuration["Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(System.Convert.FromBase64String(Configuration["SecurityKey"])),
+                    ClockSkew = System.TimeSpan.Zero
+                };
+            });
+
             services.AddAutoMapper(typeof(Startup));
         }
 
@@ -53,6 +71,8 @@ namespace coretest
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

@@ -1,17 +1,14 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using coretest.Domain.Models;
 using coretest.Domain.Services;
 using AutoMapper;
 using coretest.Resources;
 using coretest.Extensions;
-using System.Security.Cryptography;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using Microsoft.Extensions.Configuration;
 using coretest.Filters;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace coretest.Controllers
 {
@@ -21,13 +18,11 @@ namespace coretest.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IMapper _mapper;
-        private readonly IConfiguration _configuration;
 
-        public AuthController(IAuthService authService, IMapper mapper, IConfiguration configuration)
+        public AuthController(IAuthService authService, IMapper mapper)
         {
             _authService = authService;
             _mapper = mapper;
-            _configuration = configuration;
         }
 
         //log in endpoint
@@ -39,47 +34,23 @@ namespace coretest.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
 
             var TestUsername = _mapper.Map<LoginResource, Auth>(resource);
+
             //test if user exists
-            var result = await _authService.FindAsync(TestUsername);
+            var result = await _authService.FindAsync(TestUsername.username);
             if (!result.Success)
             {
                 return BadRequest(result.Message);
             }
-            
-            //if user does exists, check pass
-            byte[] savedPasswordBytes = Convert.FromBase64String(result.User.password);
-            byte[] salt = new byte[16];
-            Array.Copy(savedPasswordBytes, 0, salt, 0, 16);
-            var inputPass = new Rfc2898DeriveBytes(resource.password, salt, 10000);
-            byte[] inputHash = inputPass.GetBytes(20);
 
-            for (int i = 0; i < 20; i++)
+            //if user does exists, check pass
+            result = _authService.CheckPass(TestUsername, result.User);
+            if (!result.Success)
             {
-                if (savedPasswordBytes[i + 16] != inputHash[i])
-                    return BadRequest("Incorrect username or password");
+                return BadRequest(result.Message);
             }
 
             //create auth token
-            var symmetricKey = Convert.FromBase64String(_configuration["SecurityKey"]);
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var now = DateTime.UtcNow;
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(ClaimTypes.Name, resource.username)
-                }),
-
-                Expires = now.AddDays(1),
-
-                SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(symmetricKey),
-                    SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var stoken = tokenHandler.CreateToken(tokenDescriptor);
-            var token = tokenHandler.WriteToken(stoken);
+            var token = _authService.CreateToken(result.User);
 
             //send auth token
             return Ok(token); 
@@ -87,9 +58,22 @@ namespace coretest.Controllers
 
         //refresh token
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> PutAsync()
         {
-            return Ok();
+            //jwt is part of request header
+            //get username from jwt
+            var username = HttpContext.User.FindFirst("username").Value;
+            //check user exists
+            var result = await _authService.FindAsync(username);
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+            //create new jwt using username
+            var token = _authService.CreateToken(result.User);
+            //return new jwt
+            return Ok(token);
         }
     }
 }

@@ -9,5 +9,7 @@ namespace coretest.Domain.Services
         Task<CreateUserResponse> CreateUserAsync(User user);
         Task<CreateUserResponse> FindNameAsync(User user);
         Task<CreateUserResponse> FindEmailAsync(User user);
+        Task<CreateUserResponse> PasswordValidation(User user);
+        Task<User> HashPassword(User user);
     }
 }
