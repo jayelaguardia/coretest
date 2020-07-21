@@ -75,3 +75,16 @@ C:\Users\rezak\source\repos\coretest\coretest\bin\Release\netcoreapp3.1\Microsof
 C:\Users\rezak\source\repos\coretest\coretest\bin\Release\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Users\rezak\source\repos\coretest\coretest\bin\Release\netcoreapp3.1\Properties\serviceDependencies.coretest20200712061116 - Web Deploy.json
 C:\Users\rezak\source\repos\coretest\coretest\bin\Release\netcoreapp3.1\Microsoft.AspNetCore.AzureKeyVault.HostingStartup.dll
+C:\Users\rezak\Source\Repos\coretest\coretest\bin\Release\netcoreapp3.1\System.Web.Mvc.dll
+C:\Users\rezak\Source\Repos\coretest\coretest\bin\Release\netcoreapp3.1\System.Web.Razor.dll
+C:\Users\rezak\Source\Repos\coretest\coretest\bin\Release\netcoreapp3.1\System.Net.Http.Formatting.dll
+C:\Users\rezak\Source\Repos\coretest\coretest\bin\Release\netcoreapp3.1\System.Web.Http.dll
+C:\Users\rezak\Source\Repos\coretest\coretest\bin\Release\netcoreapp3.1\System.Web.Helpers.dll
+C:\Users\rezak\Source\Repos\coretest\coretest\bin\Release\netcoreapp3.1\System.Web.WebPages.Deployment.dll
+C:\Users\rezak\Source\Repos\coretest\coretest\bin\Release\netcoreapp3.1\System.Web.WebPages.Razor.dll
+C:\Users\rezak\Source\Repos\coretest\coretest\bin\Release\netcoreapp3.1\System.Web.WebPages.dll
+C:\Users\rezak\Source\Repos\coretest\coretest\bin\Release\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\rezak\Source\Repos\coretest\coretest\bin\Release\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Users\rezak\Source\Repos\coretest\coretest\bin\Release\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\rezak\Source\Repos\coretest\coretest\bin\Release\netcoreapp3.1\Microsoft.Web.Infrastructure.dll
+C:\Users\rezak\Source\Repos\coretest\coretest\bin\Release\netcoreapp3.1\Newtonsoft.Json.Bson.dll
