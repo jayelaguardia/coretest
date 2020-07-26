@@ -8,6 +8,7 @@ using coretest.Extensions;
 using coretest.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using System.Text.Json;
 
 namespace coretest.Controllers
 {
@@ -52,9 +53,10 @@ namespace coretest.Controllers
 
             //create auth token
             var token = _authService.CreateToken(result.User);
+            var tokenString = JsonSerializer.Serialize(token);
 
             //send auth token
-            return Ok(token); 
+            return Ok(tokenString); 
         }       
 
         //refresh token
