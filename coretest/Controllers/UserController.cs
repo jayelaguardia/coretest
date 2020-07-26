@@ -7,6 +7,7 @@ using coretest.Resources;
 using coretest.Extensions;
 using coretest.Filters;
 using Microsoft.AspNetCore.Cors;
+using System.Text.Json;
 
 namespace coretest.Controllers
 {
@@ -30,7 +31,10 @@ namespace coretest.Controllers
         {
             //if request body does not contain required fields return error
             if (!ModelState.IsValid)
-                return BadRequest(ModelState.GetErrorMessages());
+            {
+                var errorString = JsonSerializer.Serialize(ModelState.GetErrorMessages());
+                return BadRequest(errorString);
+            }
 
             var TestUser = _mapper.Map<CreateUserResource, User>(resource);
 
@@ -38,21 +42,24 @@ namespace coretest.Controllers
             var result = await _userService.FindEmailAsync(TestUser);
             if (!result.Success)
             {
-                return BadRequest(result.Message);
+                var errorString = JsonSerializer.Serialize(result.Message);
+                return BadRequest(errorString);
             }
 
             //test if username is taken
             result = await _userService.FindNameAsync(TestUser);
             if (!result.Success)
             {
-                return BadRequest(result.Message);
+                var errorString = JsonSerializer.Serialize(result.Message);
+                return BadRequest(errorString);
             }
 
             //test password validation
             result = await _userService.PasswordValidation(TestUser);
             if (!result.Success)
             {
-                return BadRequest(result.Message);
+                var errorString = JsonSerializer.Serialize(result.Message);
+                return BadRequest(errorString);
             }
 
             //hash the password
@@ -62,12 +69,15 @@ namespace coretest.Controllers
             var response = await _userService.CreateUserAsync(user);
             if (!response.Success)
             {
-                return BadRequest(response.Message);
+                var errorString = JsonSerializer.Serialize(result.Message);
+                return BadRequest(errorString);
             }
 
             //return success with user email/name
             var userResource = _mapper.Map<User, UserResource>(response.User);
-            return Ok(userResource);
+            var userString = JsonSerializer.Serialize(userResource);
+
+            return Ok(userString);
         }
     }
 }

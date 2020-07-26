@@ -33,7 +33,11 @@ namespace coretest.Controllers
         {
             //if request body does not contain required fields return error
             if (!ModelState.IsValid)
-                return BadRequest(ModelState.GetErrorMessages());
+            {
+                var errorString = JsonSerializer.Serialize(ModelState.GetErrorMessages());
+                return BadRequest(errorString);
+            }
+                
 
             var TestUsername = _mapper.Map<LoginResource, Auth>(resource);
 
@@ -41,14 +45,16 @@ namespace coretest.Controllers
             var result = await _authService.FindAsync(TestUsername.username);
             if (!result.Success)
             {
-                return BadRequest(result.Message);
+                var errorString = JsonSerializer.Serialize(result.Message);
+                return BadRequest(errorString);
             }
 
             //if user does exists, check pass
             result = _authService.CheckPass(TestUsername, result.User);
             if (!result.Success)
             {
-                return BadRequest(result.Message);
+                var errorString = JsonSerializer.Serialize(result.Message);
+                return BadRequest(errorString);
             }
 
             //create auth token
@@ -71,12 +77,15 @@ namespace coretest.Controllers
             var result = await _authService.FindAsync(username);
             if (!result.Success)
             {
-                return BadRequest(result.Message);
+                var errorString = JsonSerializer.Serialize(result.Message);
+                return BadRequest(errorString);
             }
             //create new jwt using username
             var token = _authService.CreateToken(result.User);
+            var tokenString = JsonSerializer.Serialize(token);
+
             //return new jwt
-            return Ok(token);
+            return Ok(tokenString);
         }
     }
 }
