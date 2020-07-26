@@ -7,11 +7,12 @@ using coretest.Resources;
 using coretest.Extensions;
 using coretest.Filters;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Filters;
-using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Cors;
 
 namespace coretest.Controllers
 {
+
+    [EnableCors("AllowOrigin")]
     [ApiKeyAuth]
     [Route("/api/[controller]")]
     public class AuthController : Controller

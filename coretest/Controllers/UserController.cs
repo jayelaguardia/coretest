@@ -6,9 +6,11 @@ using AutoMapper;
 using coretest.Resources;
 using coretest.Extensions;
 using coretest.Filters;
+using Microsoft.AspNetCore.Cors;
 
 namespace coretest.Controllers
 {
+    [EnableCors("AllowOrigin")]
     [ApiKeyAuth]
     [Route("/api/[controller]")]
     public class UserController : Controller
